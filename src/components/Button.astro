@@ -1,6 +1,6 @@
 ---
 /**
- * Site-wide button. One shape/size/typography for every button;
+ * Site-wide button. One shape/size (52px tall pill)/typography for every button;
  * only colors change per variant:
  *  - dark:  black bg, white text (navbar)
  *  - cream: warm cream bg, black text (primary CTA)
@@ -15,7 +15,7 @@ interface Props {
 const { href, variant = "dark", class: className = "" } = Astro.props;
 
 const base =
-  "inline-block rounded-full px-4 py-2 md:px-5 text-[12px] md:text-[12.5px] font-medium tracking-[-0.01em] transition-colors";
+  "inline-flex h-[52px] items-center justify-center rounded-full px-7 text-[12px] md:text-[12.5px] font-medium tracking-[-0.01em] transition-colors";
 
 const variants = {
   dark: "bg-forest text-ivory hover:bg-forest-soft",
