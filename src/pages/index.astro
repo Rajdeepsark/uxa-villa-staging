@@ -1122,7 +1122,104 @@ import Button from "../components/Button.astro";
         </div>
       </section>
 
-      <!-- 6 · FINAL INVITATION -->
+      <!-- 6 · GUEST TESTIMONIALS -->
+      <section id="testimonials" class="relative overflow-hidden bg-forest-deep py-24 text-ivory md:py-32">
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:radial-gradient(rgba(255,255,255,0.5)_0.5px,transparent_0.5px)] [background-size:3px_3px]"
+        >
+        </div>
+
+        <div class="container-site relative">
+          <div class="flex flex-col items-center text-center">
+            <div class="flex items-center gap-3">
+              <span aria-hidden="true" class="h-px w-8 bg-gold-light/40"></span>
+              <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold-light">
+                Guest Reviews
+              </p>
+              <span aria-hidden="true" class="h-px w-8 bg-gold-light/40"></span>
+            </div>
+            <h2 class="font-serif tracking-[-0.03em] text-[36px] leading-[1.1] md:text-[52px] mt-5 max-w-[720px] text-ivory md:mt-6">
+              Trusted by Guests Beside the <span class="u-editorial-light">Brahmaputra</span>.
+            </h2>
+          </div>
+
+          <!-- Testimonial strip -->
+          <div
+            id="testimonial-strip"
+            class="mt-14 flex gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] md:mt-16 md:gap-6 [&::-webkit-scrollbar]:hidden"
+          >
+            {
+              [
+                {
+                  quote: "Every moment exceeded our expectations, from the warm welcome to the breathtaking river views and exceptionally personalised service.",
+                  name: "James Wilson",
+                  place: "United Kingdom",
+                },
+                {
+                  quote: "The villa was beautifully designed, the hospitality exceptional, and every member of staff made our anniversary truly unforgettable and relaxing.",
+                  name: "Emilie Laurent",
+                  place: "France",
+                },
+                {
+                  quote: "UXA perfectly balanced Assamese heritage and modern comfort, delivering flawless hospitality that made our family trip genuinely memorable.",
+                  name: "Meera Sherwood",
+                  place: "United States",
+                },
+                {
+                  quote: "From effortless check-in to the quiet luxury of the suites, every detail felt considered, and the concierge's care was outstanding throughout.",
+                  name: "Kenji Watanabe",
+                  place: "Japan",
+                },
+                {
+                  quote: "A rare kind of stillness. We arrived as strangers to Tezpur and left feeling like the river and the villa's staff both knew our names.",
+                  name: "Ananya Rao",
+                  place: "India",
+                },
+              ].map((t) => (
+                <figure class="w-[300px] shrink-0 rounded-[20px] border border-ivory/12 bg-ivory/[0.04] p-6 md:w-[340px] md:p-7">
+                  <div class="flex gap-0.5 text-gold-light" aria-hidden="true">
+                    {Array.from({ length: 5 }).map(() => (
+                      <svg class="size-3.5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z" /></svg>
+                    ))}
+                  </div>
+                  <blockquote class="mt-4 text-[15px] leading-relaxed tracking-[-0.02em] text-ivory/85 md:text-[16px]">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <figcaption class="mt-6 flex items-center gap-3">
+                    <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-gold-light/15 text-[12px] font-medium tracking-[-0.01em] text-gold-light">
+                      {t.name.split(" ").map((w) => w[0]).join("")}
+                    </span>
+                    <span>
+                      <span class="block text-[14px] font-medium tracking-[-0.01em] text-ivory">{t.name}</span>
+                      <span class="block text-[12px] tracking-[-0.01em] text-ivory/55">{t.place}</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              ))
+            }
+          </div>
+
+          <!-- Stats -->
+          <div class="mt-16 grid grid-cols-2 gap-y-10 border-t border-ivory/12 pt-12 md:mt-20 md:grid-cols-4 md:gap-0 md:divide-x md:divide-ivory/12 md:pt-14">
+            {
+              [
+                { value: "5", label: "Private Suites" },
+                { value: "240+", label: "Happy Guests" },
+                { value: "98%", label: "Guest Satisfaction" },
+                { value: "24/7", label: "Concierge Service" },
+              ].map((s) => (
+                <div class="text-center">
+                  <p class="font-serif text-[36px] leading-none tracking-[-0.03em] text-ivory md:text-[44px]">{s.value}</p>
+                  <p class="mt-3 text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/55">{s.label}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 · FINAL INVITATION -->
       <section
         id="contact"
         data-parallax-bg
