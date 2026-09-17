@@ -8,24 +8,36 @@ const whatsapp = "https://wa.me/919101798042";
 const email = "concierge@uxavilla.com";
 
 const field =
-  "mt-2 block w-full rounded-[8px] border border-forest/15 bg-white px-4 py-3.5 text-[15px] tracking-[-0.02em] text-forest placeholder:text-ink-muted/55 transition-colors focus:border-forest/50 focus:outline-none";
-const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-forest";
+  "mt-2 block w-full rounded-[8px] border border-ivory/20 bg-ivory/[0.06] px-4 py-3.5 text-[15px] tracking-[-0.02em] text-ivory placeholder:text-ivory/40 transition-colors focus:border-gold-light focus:outline-none [color-scheme:dark]";
+const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-ivory";
 ---
 
 <Base title="Contact — UXA Villa" description="Call the UXA Villa concierge in Tezpur, or leave your number and we'll call you back.">
-  <section class="py-20 md:py-28 lg:py-32">
-    <div class="container-site">
+  <section class="relative overflow-hidden bg-forest-deep py-20 text-ivory md:py-28 lg:py-32">
+    <!-- Ground — the buy-out card's forest gradient with the fine dot grain -->
+    <div
+      id="contact-ground"
+      aria-hidden="true"
+      class="absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_112%,#27483e_0%,#18291f_42%,#0f1a15_100%)]"
+    >
+    </div>
+    <div
+      aria-hidden="true"
+      class="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(rgba(255,255,255,0.5)_0.5px,transparent_0.5px)] [background-size:3px_3px]"
+    >
+    </div>
+    <div class="container-site relative">
       <div class="grid gap-16 md:grid-cols-12 md:gap-8 lg:gap-12">
         <!-- Call the concierge -->
         <div class="flex flex-col md:col-span-5">
-          <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold">Call concierge</p>
+          <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold-light">Call concierge</p>
           <a
             href={phoneHref}
-            class="mt-5 block font-serif text-[44px] leading-none tracking-[-0.03em] text-forest transition-colors hover:text-gold md:mt-6 md:text-[60px] lg:text-[72px]"
+            class="mt-5 block font-serif text-[44px] leading-none tracking-[-0.03em] text-ivory transition-colors hover:text-gold-light md:mt-6 md:text-[60px] lg:text-[72px]"
           >
             {phone}
           </a>
-          <p class="mt-6 max-w-[460px] text-[15px] md:text-[16px] leading-relaxed tracking-[-0.02em] text-ink-muted md:mt-7">
+          <p class="mt-6 max-w-[460px] text-[15px] md:text-[16px] leading-relaxed tracking-[-0.02em] text-ivory/65 md:mt-7">
             Our concierge answers in person, around the clock. The fastest way
             to arrange a stay or speak about a private buy-out.
           </p>
@@ -34,21 +46,21 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-for
             <Button href={phoneHref} variant="cream" class="uppercase tracking-[0.12em]">
               Call now &rarr;
             </Button>
-            <Button href={whatsapp} variant="outline" class="uppercase tracking-[0.12em]" target="_blank" rel="noopener noreferrer">
+            <Button href={whatsapp} variant="outline" class="!border-gold-light !text-gold-light hover:!bg-gold-light/10 uppercase tracking-[0.12em]" target="_blank" rel="noopener noreferrer">
               <svg aria-hidden="true" class="mr-2.5 size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 20l1.3-3.8A8 8 0 1 1 8.3 19L4 20Z" /><path d="M9.5 9.5c0 3 2 5 5 5l1-1.5-2-1-.8.8a4 4 0 0 1-1.8-1.8l.8-.8-1-2-1.2 1.3Z" />
               </svg>
               WhatsApp
             </Button>
           </div>
-          <p class="mt-5 text-[11px] font-medium uppercase tracking-[0.28em] text-gold">
+          <p class="mt-5 text-[11px] font-medium uppercase tracking-[0.28em] text-gold-light">
             24 hours &middot; Tezpur, IST
           </p>
 
           <!-- Decorative detail — the gallery's arc, in miniature -->
           <svg
             aria-hidden="true"
-            class="mt-12 h-10 w-[120px] text-forest md:mt-auto"
+            class="mt-12 h-10 w-[120px] text-ivory md:mt-auto"
             viewBox="0 0 120 40"
             fill="none"
             stroke="currentColor"
@@ -56,21 +68,21 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-for
           >
             <path d="M0 38 Q60 6 120 38" stroke-opacity="0.18" />
             <path d="M12 39 Q60 16 108 39" stroke-opacity="0.12" />
-            <circle cx="60" cy="22" r="2" fill="#a3834a" stroke="none" />
+            <circle cx="60" cy="22" r="2" fill="#d9bc85" stroke="none" />
           </svg>
 
-          <dl class="mt-8 grid gap-7 border-t border-forest/10 pt-8 sm:grid-cols-2 md:mt-10 md:pt-10">
+          <dl class="mt-8 grid gap-7 border-t border-ivory/12 pt-8 sm:grid-cols-2 md:mt-10 md:pt-10">
             <div>
-              <dt class="text-[11px] font-medium uppercase tracking-[0.2em] text-ink-muted">Email</dt>
+              <dt class="text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/65">Email</dt>
               <dd class="mt-2">
-                <a href={`mailto:${email}`} class="text-[15px] md:text-[16px] tracking-[-0.02em] text-forest transition-colors hover:text-gold">
+                <a href={`mailto:${email}`} class="text-[15px] md:text-[16px] tracking-[-0.02em] text-ivory transition-colors hover:text-gold">
                   {email}
                 </a>
               </dd>
             </div>
             <div>
-              <dt class="text-[11px] font-medium uppercase tracking-[0.2em] text-ink-muted">Our estate</dt>
-              <dd class="mt-2 text-[15px] md:text-[16px] leading-snug tracking-[-0.02em] text-forest">
+              <dt class="text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/65">Our estate</dt>
+              <dd class="mt-2 text-[15px] md:text-[16px] leading-snug tracking-[-0.02em] text-ivory">
                 Brahmaputra Waterfront,<br />
                 Tezpur, Assam 784001
               </dd>
@@ -79,13 +91,13 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-for
         </div>
 
         <!-- Request a callback -->
-        <div class="md:col-span-6 md:col-start-7 md:border-l md:border-forest/10 md:pl-8 lg:pl-12">
+        <div class="md:col-span-6 md:col-start-7 md:border-l md:border-ivory/12 md:pl-8 lg:pl-12">
           <form id="callback" novalidate>
-            <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold">Or, request a callback</p>
-            <h1 class="font-serif tracking-[-0.03em] text-[36px] leading-[1.06] md:text-[44px] mt-4 text-forest">
+            <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold-light">Or, request a callback</p>
+            <h1 class="font-serif tracking-[-0.03em] text-[36px] leading-[1.06] md:text-[44px] mt-4 text-ivory">
               We&rsquo;ll Call You.
             </h1>
-            <p class="mt-4 max-w-[520px] text-[15px] md:text-[16px] leading-relaxed tracking-[-0.02em] text-ink-muted">
+            <p class="mt-4 max-w-[520px] text-[15px] md:text-[16px] leading-relaxed tracking-[-0.02em] text-ivory/65">
               Leave your number and a window that suits you. Our concierge will
               call back, usually within the hour.
             </p>
@@ -118,24 +130,24 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-for
               </div>
               <div class="sm:col-span-2">
                 <label for="notes" class={label}>
-                  Notes <span class="normal-case tracking-[-0.01em] text-ink-muted">(optional)</span>
+                  Notes <span class="normal-case tracking-[-0.01em] text-ivory/65">(optional)</span>
                 </label>
                 <textarea id="notes" name="notes" rows="4" placeholder="Anything we should know before we call…" class={field}></textarea>
               </div>
             </div>
 
             <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
-              <Button href="#" variant="dark" class="js-submit uppercase tracking-[0.12em]">
+              <Button href="#" variant="dark" class="js-submit !bg-ivory !text-forest hover:!bg-cream uppercase tracking-[0.12em]">
                 Request a callback &rarr;
               </Button>
-              <p class="flex items-center gap-2 text-[13px] tracking-[-0.02em] text-ink-muted">
-                <svg aria-hidden="true" class="size-3.5 shrink-0 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <p class="flex items-center gap-2 text-[13px] tracking-[-0.02em] text-ivory/65">
+                <svg aria-hidden="true" class="size-3.5 shrink-0 text-gold-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" />
                 </svg>
                 Your number stays with the concierge &mdash; never shared
               </p>
             </div>
-            <p id="callback-note" class="mt-4 hidden text-[13px] tracking-[-0.02em] text-gold" role="status"></p>
+            <p id="callback-note" class="mt-4 hidden text-[13px] tracking-[-0.02em] text-gold-light" role="status"></p>
           </form>
         </div>
       </div>
