@@ -1,0 +1,29 @@
+---
+/**
+ * Site-wide button. One shape/size/typography for every button;
+ * only colors change per variant:
+ *  - dark:  black bg, white text (navbar)
+ *  - cream: warm cream bg, black text (primary CTA)
+ *  - ghost: transparent bg, white text (secondary CTA on imagery)
+ */
+interface Props {
+  href: string;
+  variant?: "dark" | "cream" | "ghost";
+  class?: string;
+}
+
+const { href, variant = "dark", class: className = "" } = Astro.props;
+
+const base =
+  "inline-block rounded-full px-4 py-2 md:px-5 text-[12px] md:text-[12.5px] font-medium tracking-[-0.01em] transition-colors";
+
+const variants = {
+  dark: "bg-forest text-ivory hover:bg-forest-soft",
+  cream: "bg-cream text-forest hover:bg-cream-deep",
+  ghost: "bg-transparent text-ivory/90 hover:bg-ivory/10 hover:text-ivory",
+};
+---
+
+<a href={href} class={`${base} ${variants[variant]} ${className}`}>
+  <slot />
+</a>

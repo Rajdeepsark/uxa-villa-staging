@@ -1,0 +1,1179 @@
+---
+import Navbar from "../components/Navbar.astro";
+import Button from "../components/Button.astro";
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UXA Villa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=EB+Garamond:wght@400;500;600&display=swap"
+    />
+  </head>
+  <body class="min-h-screen bg-ivory font-sans antialiased">
+    <div class="relative">
+      <Navbar />
+
+      <!-- ═══════════════ HERO ═══════════════
+           Full-bleed architectural photograph. Centered headline,
+           description and CTAs, with the information line at the foot,
+           all on the shared 1280px grid.
+           Drop the real villa photo in as public/hero.jpg; the Unsplash
+           layer beneath it is only a placeholder. -->
+      <section
+        id="hero"
+        class="relative h-[calc(100vh-104px)] min-h-[680px] overflow-hidden bg-forest-deep md:h-[calc(100vh-112px)]"
+      >
+        <!-- Hero visual — the photograph plus its forest-tinted overlay.
+             This single wrapper is what travels down into the gallery
+             ticker in the next section (see the script there); it is
+             never duplicated. -->
+        <div id="hero-visual" class="absolute inset-0 overflow-hidden" data-parallax-img="0.12">
+          <img
+            src="/hero.jpg"
+            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=2400&auto=format&fit=crop'"
+            alt="UXA Villa at dusk — pool, palms and warm architectural light"
+            class="h-full w-full object-cover"
+            fetchpriority="high"
+          />
+          <div
+            aria-hidden="true"
+            class="hero-shade absolute inset-0 bg-[linear-gradient(to_bottom,rgba(18,28,23,0.55)_0%,rgba(18,28,23,0.55)_55%,rgba(18,28,23,0.66)_100%)]"
+          >
+          </div>
+        </div>
+
+        <!-- Fine dotted grain texture -->
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(rgba(255,255,255,0.5)_0.5px,transparent_0.5px)] [background-size:3px_3px]"
+        >
+        </div>
+
+        <!-- Headline, description and CTAs — centred in the hero, both axes -->
+        <div class="absolute inset-0 z-10 flex items-center justify-center">
+          <div class="container-site">
+            <h1
+              class="font-serif tracking-[-0.03em] text-[44px] leading-[1.06] md:text-[clamp(52px,4.8vw,68px)] mx-auto max-w-[720px] text-center text-ivory"
+            >
+              A Sanctuary Where the<br />
+              <span class="u-editorial-light">Brahmaputra</span> Whispers.
+            </h1>
+            <p class="mx-auto mt-5 max-w-[560px] text-center text-[17px] leading-[1.35] tracking-[-0.02em] md:mt-6 md:text-[21px] md:leading-[1.25]">
+              <span class="font-medium text-ivory">Experience a dialogue</span>
+              <span class="font-light text-ivory/70">
+                between Assamese heritage and modern minimalist luxury. Our
+                secluded villa homestay offers a rhythmic retreat curated for
+                the discerning traveler.</span
+              >
+            </p>
+            <div class="mt-7 flex flex-wrap items-center justify-center gap-5 md:mt-9 md:gap-7">
+              <Button href="#contact" variant="cream">
+                RESERVE A STAY &rarr;
+              </Button>
+              <Button href="#estate" variant="ghost">
+                EXPLORE THE ESTATE &rarr;
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Information row at the foot of the hero, under a thin divider -->
+        <div class="absolute inset-x-0 bottom-[4vh] z-10">
+          <div class="container-site">
+            <div>
+              <div class="h-px w-full bg-ivory/25" aria-hidden="true"></div>
+              <div
+                class="flex flex-col gap-3 pt-5 text-[14px] font-medium tracking-[0.01em] text-ivory md:flex-row md:items-center md:justify-between md:gap-8 md:pt-6 md:text-[15px]"
+              >
+                <p>Tezpur &middot; Assam &middot; India</p>
+                <p class="hidden lg:block">5 Suites</p>
+                <a
+                  href="#suites"
+                  class="group flex items-center gap-3.5 text-ivory transition-opacity hover:opacity-70"
+                >
+                  <span
+                    class="flex h-8 w-8 items-center justify-center rounded-full border border-ivory/45 text-[12px] transition-transform duration-300 group-hover:translate-x-[3px]"
+                    aria-hidden="true"
+                  >
+                    &rarr;
+                  </span>
+                  Property details
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1 · OUR NARRATIVE — floating, gently tilted photographs arranged
+           on a shallow arc across the full viewport, with centered editorial
+           content below. The arc is a property of the *screen*: a card's
+           height and scale depend on how far it currently is from the
+           viewport centre (highest and largest at centre, lower and smaller
+           toward the edges), so the composition reads the same whether it
+           is resting or travelling as an infinite marquee.
+           MAIN is an empty slot: on scroll the hero's own image element
+           (#hero-visual) travels down from the hero and docks into it while
+           MAIN sits featured — large and elevated — at the centre. Only once
+           it has settled does the marquee begin. The hero image is never
+           duplicated: repeated groups fill the MAIN position with the
+           entrance photograph (data-main-alt). Cards are laid out in DOM order at one uniform
+           spacing and share one size; each declares only its track label.
+           See the script at the end of the section. -->
+      <section id="our-story" class="relative overflow-hidden pt-12 pb-24 md:pt-16 md:pb-32">
+        <!-- Gallery — full-bleed, deliberately not constrained to the 1280px grid -->
+        <div id="gallery-ticker" class="relative h-[420px] w-full md:h-[560px]">
+          <!-- The curved track line and faint grid — drawn by the script
+               from the same arc function that places the cards. -->
+          <svg
+            id="gallery-lines"
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-0 h-full w-full"
+            fill="none"
+            stroke="#1b2a22"
+            stroke-width="1"
+          >
+            <path id="gallery-grid" stroke-opacity="0.04" />
+            <path id="gallery-track-line" stroke-opacity="0.14" />
+          </svg>
+          <!-- Cards are laid out in DOM order at one uniform spacing, centred
+               on MAIN; each declares only its track label. All cards share
+               one size; position and rotation come from the shared arc. -->
+          <div id="gallery-track" class="absolute inset-0 opacity-0 transition-opacity duration-700">
+            <figure class="ticker-card" data-label="The Lounge">
+              <img
+                src="/images/villa/lounge.jpg"
+                alt="The lounge — evening light and the tea-garden screen"
+                loading="lazy"
+              />
+            </figure>
+            <figure class="ticker-card" data-label="Master Bedroom">
+              <img
+                src="/images/villa/master-bedroom.jpg"
+                alt="Master bedroom with fluted timber wall"
+                loading="lazy"
+              />
+            </figure>
+            <figure class="ticker-card" data-label="Evening Lounge">
+              <img
+                src="/images/villa/evening-lounge.jpg"
+                alt="The lounge at night"
+                loading="lazy"
+              />
+            </figure>
+            <!-- MAIN — the hero slot. data-main-alt / data-label-alt are used
+                 in repeated groups so the marquee has no gap and no hero copy. -->
+            <figure
+              id="hero-slot"
+              class="ticker-card ticker-card--main"
+              data-label="The Villa"
+              data-label-alt="The Entrance"
+              data-main-src="/images/villa/entrance.jpg"
+              data-main-alt="/images/villa/entrance.jpg"
+            >
+            </figure>
+            <figure class="ticker-card" data-label="Bedroom Suite">
+              <img
+                src="/images/villa/bedroom-suite.jpg"
+                alt="Bedroom suite with warm cove lighting"
+                loading="lazy"
+              />
+            </figure>
+            <figure class="ticker-card" data-label="Guest Bedroom">
+              <img
+                src="/images/villa/guest-bedroom.jpg"
+                alt="Guest bedroom with seating"
+                loading="lazy"
+              />
+            </figure>
+            <figure class="ticker-card" data-label="The Living Room">
+              <img
+                src="/images/villa/living-room.jpg"
+                alt="The living room opening onto the balcony"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+        </div>
+
+        <div class="container-site">
+          <!-- Centered content -->
+          <div class="relative z-20 mx-auto mt-4 max-w-[620px] text-center md:mt-6">
+            <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold">
+              Our Narrative
+            </p>
+            <h2 class="font-serif tracking-[-0.03em] text-[40px] leading-[1.08] md:text-[56px] mt-5 text-forest md:mt-6">
+              Verdant Sophistication.
+            </h2>
+            <p class="mt-6 text-[14px] md:text-[15px] leading-relaxed tracking-[-0.02em] text-ink-muted md:mt-8">
+              Inspired by the emerald tea gardens and the serene flow of the
+              river, UXA Villa Homestay is more than a destination. It is a
+              curated gallery of local craftsmanship&mdash;from Muga silk
+              textiles to hand-woven cane furniture&mdash;balanced with the
+              structure of modern architecture.
+            </p>
+            <blockquote class="mx-auto mt-8 max-w-[520px] text-[15px] md:text-[16px] leading-relaxed tracking-[-0.02em] text-forest md:mt-10">
+              &ldquo;The design transitions from Mediterranean minimalism to a
+              narrative of Assamese Heritage Luxury, evoking the atmosphere of
+              a secluded villa overlooking the Brahmaputra.&rdquo;
+            </blockquote>
+            <div class="mt-10 md:mt-12">
+              <Button href="#contact" variant="dark">
+                RESERVE YOUR RETREAT &rarr;
+              </Button>
+            </div>
+          </div>
+
+        </div>
+
+        <script>
+          const hero = document.getElementById("hero");
+          const visual = document.getElementById("hero-visual");
+          const shade = visual?.querySelector<HTMLElement>(".hero-shade");
+          const slot = document.getElementById("hero-slot");
+          const ticker = document.getElementById("gallery-ticker");
+          const track = document.getElementById("gallery-track");
+          const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          if (slot && ticker && track) {
+            // No hero photograph to receive: MAIN is filled up front and
+            // starts settled in the row.
+            if (!visual) {
+              const img = document.createElement("img");
+              img.src = slot.dataset.mainSrc || slot.dataset.mainAlt || "";
+              img.alt = "The entrance at dusk";
+              img.loading = "lazy";
+              slot.appendChild(img);
+              slot.classList.add("is-filled");
+            }
+            // ── Arc composition + infinite ticker ──────────────────────
+            // Geometry is relative to the frame width W (the viewport, with
+            // a floor so phones still get a generous composition). Each card
+            // declares its place in the sequence (data-x, % of W), its tilt
+            // and its aspect ratio. A card's vertical position and scale on
+            // screen depend on u — its current distance from the viewport
+            // centre as a fraction of W/2 — so the arc belongs to the screen,
+            // not the card: highest and largest at centre, lower and smaller
+            // toward the edges. MAIN (the hero slot) is featured — large and
+            // elevated — while at the centre and eases down onto the arc as
+            // it departs. The sequence is repeated as whole groups (MAIN in
+            // repeats becomes an ordinary card showing the villa exterior;
+            // the hero image exists exactly once) and a card that fully
+            // leaves the left edge is moved one cycle to the right. The
+            // ticker only runs once the hero image has docked and settled
+            // (see the frame loop); it never moves during the transition.
+            const CARD_ASPECT = 0.82; // height / width, shared by every card and the featured frame
+            const SPEED = 60; // px per second
+            const HOVER_SLOW = 0.35; // speed multiplier while the pointer is over the gallery
+            let hover = 0; // eases 0 → 1 while hovered
+            const SETTLE_MS = 450; // stillness after docking before motion begins
+            const RAMP_MS = 1400; // ease-in from rest to full speed
+            const SPREAD_START = 0.72; // surrounding cards fan out from here to 1 as the hero docks
+            const SHRINK_MS = 900; // MAIN eases from featured size into the row before motion
+            type Item = {
+              el: HTMLElement;
+              label: HTMLElement; // track label printed beneath the card
+              dot: HTMLElement; // separator dot halfway to the next item
+              dotDx: number; // dot's offset from the card centre
+              featured: boolean; // the hero slot itself
+              w: number; // base width (before arc scale)
+              h: number;
+              base: number; // settled centre x within the repeating sequence
+              rx: number; // settled offset from its group's MAIN
+              x: number; // current centre x
+            };
+            let items: Item[] = [];
+            let cycle = 0;
+            let originX = 0;
+            let spread = 1;
+            let featuredM = visual ? 0 : 1; // 0 = MAIN featured (large, elevated) · 1 = settled into the row
+            let dockShrunk = !visual; // MAIN was already in the row when it (re)docked
+            // Frame geometry, recomputed in build()
+            let W = 1440;
+            let MAIN_W = 0;
+            let MAIN_H = 0;
+            let CARD_W = 0;
+            let MAIN_CY = 0; // featured MAIN centre y
+            let ARC_TOP = 0; // arc centre y for a card at the viewport centre
+            let ARC = 0; // how far the arc drops by the frame edge
+            let LABEL_DY = 0; // labels sit this far below the arc centre line
+            const lineEl = document.getElementById("gallery-track-line");
+            const gridEl = document.getElementById("gallery-grid");
+
+            const children = () => Array.from(track.children) as HTMLElement[];
+            // The shared curved track: one shallow parabola in screen space.
+            // For a point whose centre is at screen x it returns the height on
+            // the curve and the tangent angle. Cards, labels, dots and the
+            // drawn line are all placed with this single function, so they
+            // stay on the same curve while the marquee moves.
+            function arcAt(x: number) {
+              const u = clamp((x - originX) / (W / 2), -1.4, 1.4); // signed, −1..1 across the frame
+              const y = ARC_TOP + ARC * u * u;
+              const rot = (Math.atan((2 * ARC * u) / (W / 2)) * 180) / Math.PI; // tangent
+              return { u, au: Math.abs(u), y, rot };
+            }
+
+            function setPos(el: HTMLElement, x: number, y: number, rot: number) {
+              el.style.setProperty("--x", `${x.toFixed(2)}px`);
+              el.style.setProperty("--y", `${y.toFixed(2)}px`);
+              el.style.setProperty("--r", `${rot.toFixed(3)}deg`);
+            }
+
+            function place(i: Item) {
+              const x = i.x - i.rx * (1 - spread);
+              const a = arcAt(x);
+              let y = a.y;
+              let s = 1;
+              let z = 20 - Math.round(a.au * 10);
+              if (i.featured) {
+                // Featured (large, elevated) on arrival, then eased down into
+                // the row at the same width as every other card before the
+                // ticker starts. featuredM is driven by time in the frame loop.
+                s = lerp(1, CARD_W / MAIN_W, featuredM);
+                y = lerp(MAIN_CY, a.y, featuredM);
+                if (featuredM < 1) z = 30;
+              }
+              setPos(i.el, x, y, a.rot);
+              i.el.style.setProperty("--s", s.toFixed(4));
+              i.el.style.zIndex = String(z);
+              // Label printed along the track beneath the card, and the dot
+              // halfway to the next item — both on the same curve.
+              setPos(i.label, x, a.y + LABEL_DY, a.rot);
+              const dx = x + i.dotDx;
+              const d = arcAt(dx);
+              setPos(i.dot, dx, d.y + LABEL_DY, d.rot);
+            }
+            const placeAll = () => items.forEach(place);
+
+            function build() {
+              track
+                .querySelectorAll("[data-clone], .ticker-label, .ticker-dot")
+                .forEach((n) => n.remove());
+              const vw = ticker.clientWidth;
+              W = Math.max(vw, 960);
+              MAIN_W = 0.3 * W;
+              MAIN_H = MAIN_W * CARD_ASPECT;
+              CARD_W = 0.15 * W;
+              ARC = 0.058 * W; // very shallow: ~83px drop at the frame edge on 1440
+              MAIN_CY = 12 + MAIN_H / 2;
+              ARC_TOP = MAIN_CY + MAIN_H / 2 + 0.005 * W;
+              originX = vw / 2;
+
+              const authored = children();
+              const n = authored.length;
+              const slotIdx = authored.indexOf(slot);
+              const step = CARD_W + 0.03 * W; // uniform centre-to-centre spacing (~43px gap on 1440)
+              const pitch = n * step; // repeated groups continue at exactly the same spacing
+              const groups = Math.max(2, Math.ceil((vw + pitch) / pitch));
+
+              // Repeat the sequence; MAIN in repeats is an ordinary card
+              // showing the alt image and label.
+              for (let g = 1; g < groups; g++) {
+                for (const el of authored) {
+                  const clone = el.cloneNode(true) as HTMLElement;
+                  clone.dataset.clone = "";
+                  clone.dataset.group = String(g);
+                  clone.removeAttribute("id");
+                  clone.setAttribute("aria-hidden", "true");
+                  if (el === slot) {
+                    clone.classList.remove("ticker-card--main");
+                    clone.querySelectorAll("img").forEach((n) => n.remove());
+                    clone.dataset.label = slot.dataset.labelAlt || slot.dataset.label || "";
+                    const img = document.createElement("img");
+                    img.src = slot.dataset.mainAlt || "";
+                    img.alt = "";
+                    img.loading = "lazy";
+                    clone.appendChild(img);
+                  }
+                  track.appendChild(clone);
+                }
+              }
+
+              const cards = children();
+              items = cards.map((el, k) => {
+                const g = parseInt(el.dataset.group || "0", 10);
+                const featured = el === slot;
+                const w = featured ? MAIN_W : CARD_W;
+                const h = w * CARD_ASPECT;
+                const rx = ((k % n) - slotIdx) * step; // offset from the group's MAIN, in DOM order
+                el.style.width = `${w}px`;
+                el.style.height = `${h}px`;
+                // Track label + separator dot, printed along the same curve.
+                const label = document.createElement("span");
+                label.className =
+                  "ticker-label text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold";
+                label.textContent = el.dataset.label || "";
+                if (el.hasAttribute("aria-hidden")) label.setAttribute("aria-hidden", "true");
+                const dot = document.createElement("span");
+                dot.className = "ticker-dot";
+                dot.setAttribute("aria-hidden", "true");
+                // Astro scopes this section's <style> by attribute; elements
+                // created here need the same attribute for those rules to apply.
+                for (const attr of Array.from(el.attributes)) {
+                  if (attr.name.startsWith("data-astro-cid")) {
+                    label.setAttribute(attr.name, attr.value);
+                    dot.setAttribute(attr.name, attr.value);
+                  }
+                }
+                track.append(label, dot);
+                return { el, label, dot, dotDx: 0, featured, w, h, base: g * pitch + rx, rx, x: 0 };
+              });
+              cycle = groups * pitch;
+
+              // Each dot sits halfway to the next item in the sequence (the
+              // last item's dot reaches round to the first of the next cycle).
+              const order = [...items].sort((a, b) => a.base - b.base);
+              order.forEach((it, k) => {
+                const next = order[(k + 1) % order.length];
+                const gap = k + 1 < order.length ? next.base - it.base : cycle + next.base - it.base;
+                it.dotDx = gap / 2;
+              });
+
+              // Labels sit below the tallest card; the drawn track line runs
+              // between the cards and the labels. Container fits the lowest
+              // point of the curve.
+              const tallest = Math.max(...items.filter((i) => !i.featured).map((i) => i.h));
+              LABEL_DY = tallest / 2 + 44;
+              const H = ARC_TOP + ARC + LABEL_DY + 12;
+              ticker.style.height = `${H}px`;
+              if (lineEl && gridEl) {
+                const lineC = ARC_TOP + LABEL_DY - 26; // line's y at the centre
+                const x1 = -100;
+                const x2 = vw + 100;
+                const y1 = lineC + ARC * Math.pow((x1 - originX) / (W / 2), 2);
+                lineEl.setAttribute("d", `M${x1} ${y1} Q${originX} ${2 * lineC - y1} ${x2} ${y1}`);
+                gridEl.setAttribute(
+                  "d",
+                  `M${0.25 * vw} 0V${H}M${0.5 * vw} 0V${H}M${0.75 * vw} 0V${H}`
+                );
+              }
+              recenter();
+              track.style.opacity = "1";
+            }
+
+            // Return every card to its starting position, MAIN centred.
+            // Used while the section is out of view so the next docking
+            // lands exactly in the middle again.
+            function recenter() {
+              for (const i of items) i.x = originX + i.base;
+              featuredM = visual ? 0 : 1;
+              placeAll();
+            }
+
+            function advance(dt: number) {
+              for (const i of items) {
+                i.x -= SPEED * dt;
+                if (i.x + i.w / 2 < -240) i.x += cycle;
+              }
+              placeAll();
+            }
+
+            // ── Hero image → ticker slot ───────────────────────────────
+            // Progress runs from the hero's bottom edge reaching mid-viewport
+            // (0) to the slot's centre reaching mid-viewport (1). In between,
+            // #hero-visual is position:fixed and its rect is interpolated
+            // between the live hero rect and the live slot rect; at 1 the
+            // same element is re-parented into the slot.
+            type State = "hero" | "moving" | "docked";
+            let state: State = visual ? "hero" : "docked";
+            let dockedAt = 0; // timestamp of the most recent docking
+            const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+            const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+            const ease = (t: number) =>
+              t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+            function setState(next: State) {
+              if (next === state) return;
+              if (next === "docked") {
+                slot.appendChild(visual);
+                slot.classList.add("is-filled");
+                visual.removeAttribute("style");
+                shade.style.opacity = "0";
+                dockedAt = performance.now();
+                dockShrunk = featuredM >= 1;
+                spread = 1;
+                placeAll();
+              } else {
+                slot.classList.remove("is-filled");
+                if (visual.parentElement !== hero) hero.prepend(visual);
+                if (next === "hero") {
+                  visual.removeAttribute("style");
+                  shade.style.opacity = "";
+                  if (!reduced) {
+                    spread = SPREAD_START;
+                    placeAll();
+                  }
+                }
+              }
+              state = next;
+            }
+
+            function morph() {
+              if (!hero || !visual || !shade) return;
+              const vh = window.innerHeight;
+              const y = window.scrollY;
+              const h = hero.getBoundingClientRect();
+              const s = slot.getBoundingClientRect();
+              const start = y + h.bottom - vh * 0.5;
+              // The end point is MAIN's *settled* centre (ticker top + featured
+              // centre), not its live rect — once the marquee runs, the main
+              // card moves and sinks onto the arc, and that must never read
+              // as the user having scrolled back up.
+              const t = ticker.getBoundingClientRect();
+              const end = y + t.top + MAIN_CY - vh * 0.5;
+              const p =
+                end > start ? clamp((y - start) / (end - start), 0, 1) : y >= end ? 1 : 0;
+
+              if (reduced) {
+                setState(p < 0.5 ? "hero" : "docked");
+                return;
+              }
+              if (p <= 0) return setState("hero");
+              if (p >= 1) return setState("docked");
+
+              setState("moving");
+              const e = ease(p);
+              // Surrounding cards fan out into their settled positions in
+              // step with the hero image's arrival.
+              spread = lerp(SPREAD_START, 1, e);
+              placeAll();
+              const st = visual.style;
+              st.position = "fixed";
+              st.zIndex = "30";
+              st.left = `${lerp(h.left, s.left, e)}px`;
+              st.top = `${lerp(h.top, s.top, e)}px`;
+              st.width = `${lerp(h.width, s.width, e)}px`;
+              st.height = `${lerp(h.height, s.height, e)}px`;
+              st.borderRadius = `${6 * e}px`;
+              shade.style.opacity = `${1 - e}`;
+            }
+
+            // ── Frame loop ─────────────────────────────────────────────
+            let last = performance.now();
+            function frame(now: number) {
+              const dt = Math.min((now - last) / 1000, 0.05);
+              last = now;
+              morph();
+              const r = ticker.getBoundingClientRect();
+              const near = r.bottom > -300 && r.top < window.innerHeight + 300;
+              const offscreen = r.bottom <= 0 || r.top >= window.innerHeight;
+              if (state === "docked" && !reduced && !dockShrunk) {
+                // After the settle pause, MAIN eases from featured size into
+                // the row. Nothing moves horizontally until this completes.
+                const t = clamp((now - dockedAt - SETTLE_MS) / SHRINK_MS, 0, 1);
+                const m = t * t * (3 - 2 * t);
+                if (m !== featuredM) {
+                  featuredM = m;
+                  placeAll();
+                }
+              }
+              // Without a hero handoff, the clock starts when the section first comes near.
+              if (!visual && !dockedAt && near) dockedAt = now;
+              const motionStart = dockedAt + SETTLE_MS + (dockShrunk ? 0 : SHRINK_MS);
+              const settled = state === "docked" && dockedAt > 0 && now > motionStart;
+              if (settled && !reduced && near && !document.hidden) {
+                // Ease from rest to full speed once every card is in the row;
+                // slow smoothly while hovered.
+                const ramp = clamp((now - motionStart) / RAMP_MS, 0, 1);
+                hover += ((hovering ? 1 : 0) - hover) * Math.min(1, dt * 6);
+                advance(dt * (1 - Math.pow(1 - ramp, 3)) * lerp(1, HOVER_SLOW, hover));
+              } else if (state !== "docked" && offscreen) {
+                recenter();
+              }
+              requestAnimationFrame(frame);
+            }
+
+            let hovering = false;
+            ticker.addEventListener("pointerenter", () => (hovering = true));
+            ticker.addEventListener("pointerleave", () => (hovering = false));
+
+            let resizeTimer: number | undefined;
+            window.addEventListener("resize", () => {
+              window.clearTimeout(resizeTimer);
+              resizeTimer = window.setTimeout(build, 150);
+            });
+
+            build();
+            requestAnimationFrame(frame);
+          }
+        </script>
+
+        <style>
+          /* --x / --y are the item's centre on the shared arc, --r the arc's
+             tangent there, --s the card's scale; base size and stacking are
+             set per card by the script. */
+          .ticker-label,
+          .ticker-dot {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate3d(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%), 0)
+              rotate(var(--r, 0deg));
+            will-change: transform;
+          }
+          .ticker-label {
+            white-space: nowrap;
+          }
+          .ticker-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 9999px;
+            background: rgba(163, 131, 74, 0.55);
+          }
+          .ticker-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate3d(calc(var(--x, 0px) - 50%), calc(var(--y, 0px) - 50%), 0)
+              rotate(var(--r, 0deg)) scale(var(--s, 1));
+            border-radius: 16px;
+            overflow: hidden;
+            border: 3px solid #ffffff;
+            box-shadow:
+              0 18px 40px -18px rgba(27, 42, 34, 0.35),
+              0 2px 6px rgba(27, 42, 34, 0.06);
+            background: #f7f4ec;
+            will-change: transform;
+          }
+          /* The hero slot draws nothing until the hero image has docked into
+             it — the image simply scrolls down and fits into place. */
+          .ticker-card--main:not(.is-filled) {
+            background: transparent;
+            border-color: transparent;
+            box-shadow: none;
+          }
+          .ticker-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        </style>
+      </section>
+
+      <!-- 2 · THE STAY — centred editorial statement with three large
+           statistics on hairline-divided columns -->
+      <section id="stay-overview" class="border-t border-forest/10 py-24 md:py-36">
+        <div class="container-site">
+          <div class="mx-auto flex items-center justify-center gap-3">
+            <span aria-hidden="true" class="size-[7px] bg-gold"></span>
+            <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold">
+              The Stay
+            </p>
+          </div>
+
+          <h2 class="font-serif tracking-[-0.03em] text-[42px] leading-[1.06] md:text-[68px] mx-auto mt-6 max-w-[820px] text-center text-forest md:mt-8">
+            Everything you need for a<br class="hidden md:block" />
+            <span class="u-editorial">slower stay</span> in Tezpur.
+          </h2>
+
+          <div class="mx-auto mt-10 max-w-[540px] space-y-6 text-center md:mt-14">
+            <p class="text-[16px] md:text-[18px] leading-relaxed tracking-[-0.02em] text-forest">
+              A relaxed 3BHK villa designed for families, friends and group
+              stays &mdash; with generous spaces, thoughtful essentials and the
+              quiet comfort of a home away from home.
+            </p>
+            <p class="text-[15px] md:text-[16px] leading-relaxed tracking-[-0.02em] text-ink-muted">
+              Three air-conditioned bedrooms, attached bathrooms, a lounge, full
+              kitchen access and high-speed Wi-Fi give you everything you need
+              to settle in.
+            </p>
+          </div>
+
+          <!-- Statistics — three cards in the feature-card style, 220px tall -->
+          <div class="mx-auto mt-16 grid max-w-[1040px] gap-4 md:mt-24 md:grid-cols-3 md:gap-5">
+            <div class="flex h-[220px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <p class="font-serif text-[56px] leading-none tracking-[-0.03em] text-forest md:text-[64px]">03</p>
+              <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-ink-muted">Bedrooms</p>
+            </div>
+            <div class="flex h-[220px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <p class="font-serif text-[56px] leading-none tracking-[-0.03em] text-forest md:text-[64px]">07</p>
+              <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-ink-muted">Guests</p>
+            </div>
+            <div class="flex h-[220px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <p class="font-serif text-[56px] leading-none tracking-[-0.03em] text-forest md:text-[64px]">03</p>
+              <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-ink-muted">Bathrooms</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 · ENTIRE VILLA / BUY-OUT — forest gradient CTA card. Framed
+           villa photographs appear along the cursor's path (script below). -->
+      <section id="estate" class="py-6 md:py-10">
+        <div class="container-site">
+          <div
+            id="estate-card"
+            class="relative isolate flex min-h-[540px] items-center justify-center overflow-hidden rounded-[24px] bg-forest px-7 py-16 text-center md:min-h-[620px] md:px-14 md:py-24"
+          >
+            <!-- Gradient — deep forest, lifting to a soft teal-green glow low in the card -->
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 -z-10 bg-[radial-gradient(120%_85%_at_50%_112%,#27483e_0%,#18291f_42%,#0f1a15_100%)]"
+            >
+            </div>
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 -z-10 opacity-[0.07] [background-image:radial-gradient(rgba(255,255,255,0.5)_0.5px,transparent_0.5px)] [background-size:3px_3px]"
+            >
+            </div>
+            <span aria-hidden="true" class="absolute bottom-5 right-5 h-8 w-8 border-b border-r border-gold-light/40 md:bottom-6 md:right-6"></span>
+
+            <div class="relative z-10 mx-auto max-w-[680px]">
+              <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold-light">
+                An Exclusive Buy-Out
+              </p>
+              <h2 class="font-serif tracking-[-0.03em] text-[40px] leading-[1.08] md:text-[60px] mt-5 text-ivory md:mt-6">
+                <span class="text-ivory/70">Reserve the</span><br />
+                Entire <span class="u-editorial-light">Villa</span>.
+              </h2>
+              <p class="mx-auto mt-6 max-w-[560px] text-[15px] md:text-[17px] leading-relaxed tracking-[-0.02em] text-ivory/80 md:mt-7">
+                All five suites, the Silk Spa, the Library, and the river —
+                yours alone. Curated for milestone gatherings, family retreats,
+                and quiet weeks of intentional silence.
+              </p>
+              <div class="mt-9 flex flex-col items-center gap-5 md:mt-11">
+                <Button href="#contact" variant="cream" class="!px-8 !py-3.5 uppercase tracking-[0.12em]">
+                  Reserve the Villa &rarr;
+                </Button>
+                <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.2em] text-gold-light">
+                  5 Suites &middot; Up to 10 Guests
+                </p>
+              </div>
+            </div>
+
+            <!-- Cursor trail — framed photographs spawn along the pointer's path -->
+            <div id="estate-trail" aria-hidden="true" class="pointer-events-none absolute inset-0 z-20 overflow-hidden"></div>
+          </div>
+        </div>
+
+        <script>
+          const estateCard = document.getElementById("estate-card");
+          const estateTrail = document.getElementById("estate-trail");
+          const finePointer = window.matchMedia("(pointer: fine)").matches;
+          const noMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (estateCard && estateTrail && finePointer && !noMotion) {
+            const SRCS = [
+              "/images/villa/entrance.jpg",
+              "/images/villa/master-bedroom.jpg",
+              "/images/villa/living-room.jpg",
+              "/images/villa/bedroom-suite.jpg",
+              "/images/villa/lounge.jpg",
+              "/images/villa/guest-bedroom.jpg",
+              "/images/villa/evening-lounge.jpg",
+            ];
+            const STEP = 180; // px of pointer travel between cards
+            const MAX = 3; // cards alive at once
+            const HOLD = 850; // ms before a card starts to fade
+            const LIFE = 1500; // ms until it is removed
+            SRCS.forEach((src) => { const im = new Image(); im.src = src; });
+
+            let last: { x: number; y: number } | null = null;
+            let next = 0;
+            const live: HTMLElement[] = [];
+
+            function spawn(x: number, y: number) {
+              const card = document.createElement("div");
+              card.className = "trail-card";
+              const img = document.createElement("img");
+              img.src = SRCS[next++ % SRCS.length];
+              img.alt = "";
+              card.appendChild(img);
+              card.style.left = `${x}px`;
+              card.style.top = `${y}px`;
+              card.style.setProperty("--rot", `${(Math.random() * 16 - 8).toFixed(1)}deg`);
+              estateTrail.appendChild(card);
+              live.push(card);
+              while (live.length > MAX) live.shift()?.remove();
+              requestAnimationFrame(() => card.classList.add("is-in"));
+              window.setTimeout(() => card.classList.add("is-out"), HOLD);
+              window.setTimeout(() => {
+                card.remove();
+                const k = live.indexOf(card);
+                if (k > -1) live.splice(k, 1);
+              }, LIFE);
+            }
+
+            estateCard.addEventListener("pointermove", (e) => {
+              const r = estateTrail.getBoundingClientRect();
+              const x = e.clientX - r.left;
+              const y = e.clientY - r.top;
+              if (last && Math.hypot(x - last.x, y - last.y) < STEP) return;
+              last = { x, y };
+              spawn(x, y);
+            });
+            estateCard.addEventListener("pointerleave", () => { last = null; });
+          }
+        </script>
+
+        <style is:global>
+          .trail-card {
+            position: absolute;
+            width: 120px;
+            height: 152px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+              0 24px 48px -16px rgba(0, 0, 0, 0.55),
+              0 2px 6px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(0.6);
+            transition:
+              transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+              opacity 0.35s ease;
+            will-change: transform, opacity;
+          }
+          .trail-card.is-in {
+            opacity: 0.8;
+            transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1);
+          }
+          .trail-card.is-out {
+            opacity: 0;
+            transform: translate(-50%, -58%) rotate(var(--rot, 0deg)) scale(0.96);
+            transition-duration: 0.6s;
+          }
+          .trail-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        </style>
+      </section>
+
+      <!-- 4 · EVERYTHING YOU NEED -->
+      <section id="amenities" class="border-t border-forest/10 py-24 md:py-36">
+        <div class="container-site">
+          <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold">
+            Everything You Need
+          </p>
+          <h2 class="font-serif tracking-[-0.03em] text-[40px] leading-[1.08] md:text-[56px] mt-5 text-forest md:mt-6">
+            Simple. Comfortable. Ready.
+          </h2>
+
+          <!-- Features — 4 × 2 -->
+          <div class="mt-12 grid grid-cols-2 gap-4 md:mt-16 md:gap-5 lg:grid-cols-4">
+            <div class="flex h-[280px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <svg aria-hidden="true" class="size-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a3 3 0 0 0 3 3v8M9 3v7M3 3v7a3 3 0 0 0 3 3M18 3c-1.7 0-3 2.2-3 5v3h3v10M18 3v8"/></svg>
+              <p class="text-[14px] md:text-[15px] font-medium tracking-[-0.02em] text-forest">Full kitchen access</p>
+            </div>
+            <div class="flex h-[280px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <svg aria-hidden="true" class="size-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4M12 3l-2 2M12 3l2 2M12 21l-2-2M12 21l2-2M3 12l2-2M3 12l2 2M21 12l-2-2M21 12l-2 2"/></svg>
+              <p class="text-[14px] md:text-[15px] font-medium tracking-[-0.02em] text-forest">Air conditioning</p>
+            </div>
+            <div class="flex h-[280px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <svg aria-hidden="true" class="size-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9a15 15 0 0 1 19 0M5.5 12.5a10.5 10.5 0 0 1 13 0M8.5 16a6 6 0 0 1 7 0"/><circle cx="12" cy="19.5" r="0.75" fill="currentColor"/></svg>
+              <p class="text-[14px] md:text-[15px] font-medium tracking-[-0.02em] text-forest">High-speed Wi-Fi</p>
+            </div>
+            <div class="flex h-[280px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <svg aria-hidden="true" class="size-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>
+              <p class="text-[14px] md:text-[15px] font-medium tracking-[-0.02em] text-forest">TV & lounge</p>
+            </div>
+            <div class="flex h-[280px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <svg aria-hidden="true" class="size-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4.5a3 3 0 0 1 0 6H9"/></svg>
+              <p class="text-[14px] md:text-[15px] font-medium tracking-[-0.02em] text-forest">Free parking</p>
+            </div>
+            <div class="flex h-[280px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <svg aria-hidden="true" class="size-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-3ZM6 12V6a2 2 0 0 1 4 0M7 20l-1 2M17 20l1 2"/></svg>
+              <p class="text-[14px] md:text-[15px] font-medium tracking-[-0.02em] text-forest">Attached bathrooms</p>
+            </div>
+            <div class="flex h-[280px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <svg aria-hidden="true" class="size-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3M3 10a2 2 0 0 0-1 2v6M21 10a2 2 0 0 1 1 2v6M2 15h20M2 18v2M22 18v2"/></svg>
+              <p class="text-[14px] md:text-[15px] font-medium tracking-[-0.02em] text-forest">Fresh linens</p>
+            </div>
+            <div class="flex h-[280px] flex-col justify-between rounded-[20px] border border-forest/10 bg-ivory-bright p-3">
+              <svg aria-hidden="true" class="size-5 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10.5a3.5 3.5 0 0 1 1.2-6.9A4.5 4.5 0 0 1 15.8 3.6 3.5 3.5 0 0 1 17 10.5V19a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-8.5ZM7 16h10"/></svg>
+              <p class="text-[14px] md:text-[15px] font-medium tracking-[-0.02em] text-forest">Cook available on request</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 · SUITES / THE COLLECTION -->
+      <section id="suites" class="border-t border-forest/10 py-24 md:py-36">
+        <div class="container-site">
+          <div class="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold">
+                The Collection &mdash; Five Suites
+              </p>
+              <h2 class="font-serif tracking-[-0.03em] text-[40px] leading-[1.08] md:text-[56px] mt-5 text-forest md:mt-6">
+                Living as Art.
+              </h2>
+            </div>
+            <p class="max-w-[380px] text-[14px] leading-relaxed tracking-[-0.02em] text-ink-muted">
+              Each suite is composed like a still life — Assamese silk, river
+              light, and room to breathe.
+            </p>
+          </div>
+
+          <!-- Featured suites -->
+          <div class="mt-12 grid gap-6 md:mt-16 md:grid-cols-12 md:gap-8">
+            <figure class="md:col-span-7">
+              <div class="h-[320px] overflow-hidden rounded-[24px] img-frame md:h-[520px]" data-parallax-img>
+               <img src="/images/villa/guest-bedroom.jpg" alt="Riverside Tranquility suite" class="h-full w-full object-cover" loading="lazy" />
+             </div>
+              <figcaption class="mt-5 flex items-baseline justify-between">
+                <span class="text-[15px] md:text-[16px] font-medium tracking-[-0.02em] text-forest">Riverside Tranquility</span>
+                <span class="text-[12px] tracking-[-0.01em] text-ink-muted">River-facing &middot; King</span>
+              </figcaption>
+            </figure>
+            <figure class="md:col-span-5">
+              <div class="h-[320px] overflow-hidden rounded-[24px] img-frame md:h-[520px]" data-parallax-img>
+               <img src="/images/villa/master-bedroom.jpg" alt="Verdant Sanctuary suite" class="h-full w-full object-cover" loading="lazy" />
+             </div>
+              <figcaption class="mt-5 flex items-baseline justify-between">
+                <span class="text-[15px] md:text-[16px] font-medium tracking-[-0.02em] text-forest">Verdant Sanctuary</span>
+                <span class="text-[12px] tracking-[-0.01em] text-ink-muted">Garden-facing &middot; King</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <!-- Suite index -->
+          <ul class="mt-12 border-t border-forest/10 md:mt-16">
+            {
+              [
+                { name: "The Heritage Suite", note: "Antique Assamese woodwork, private verandah" },
+                { name: "The Garden Suite", note: "Opens onto the orchid walk" },
+                { name: "The River Suite", note: "Floor-to-ceiling views of the Brahmaputra" },
+                { name: "The Tea Garden Suite", note: "Morning light over the estate greens" },
+                { name: "The Verandah Suite", note: "Wraparound sit-out, dusk-facing" },
+              ].map((suite, i) => (
+                <li class="border-b border-forest/10">
+                  <a
+                    href="#contact"
+                    class="group flex items-baseline gap-6 py-5 transition-colors hover:bg-forest/[0.03] md:gap-10 md:py-6"
+                  >
+                    <span class="w-8 shrink-0 text-[12px] tracking-[-0.01em] text-ink-muted/70">
+                      0{i + 1}
+                    </span>
+                    <span class="flex-1 text-[16px] md:text-[19px] tracking-[-0.03em] text-forest">
+                      {suite.name}
+                    </span>
+                    <span class="hidden text-[13px] tracking-[-0.02em] text-ink-muted sm:block">
+                      {suite.note}
+                    </span>
+                    <span class="shrink-0 text-[14px] text-ink-muted/70 transition-colors group-hover:text-forest">
+                      &rarr;
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      <!-- 6 · FINAL INVITATION -->
+      <section
+        id="contact"
+        data-parallax-bg
+        class="relative bg-cover bg-center [background-image:url('/invitation.jpg'),url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=2400&auto=format&fit=crop')]"
+      >
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 bg-[linear-gradient(to_top,rgba(18,28,23,0.65)_0%,rgba(18,28,23,0.35)_50%,rgba(18,28,23,0.25)_100%)]"
+        >
+        </div>
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 z-10 opacity-[0.07] [background-image:radial-gradient(rgba(255,255,255,0.5)_0.5px,transparent_0.5px)] [background-size:3px_3px]"
+        >
+        </div>
+        <div class="relative py-32 md:py-52">
+          <div class="container-site">
+            <div class="mx-auto max-w-[640px] text-center">
+              <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold-light">
+                An Invitation
+              </p>
+              <h2 class="font-serif tracking-[-0.03em] text-[40px] leading-[1.08] md:text-[56px] mt-5 text-ivory md:mt-6">
+                Begin Your <span class="u-editorial-light">Story</span> Beside the
+                Brahmaputra.
+              </h2>
+              <div class="mt-10 flex flex-wrap items-center justify-center gap-6 md:mt-12">
+                <Button href="tel:+919101798042" variant="cream">
+                  Reserve Your Stay &rarr;
+                </Button>
+              </div>
+              <div class="mt-8 flex flex-wrap items-center justify-center gap-8 text-[12px] md:text-[13px] tracking-[-0.01em] text-ivory/80">
+                <a href="tel:+919101798042" class="transition-colors hover:text-ivory">
+                  Call Us +91 91017 98042
+                </a>
+                <a
+                  href="https://wa.me/919101798042"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="transition-colors hover:text-ivory"
+                >
+                  Message on WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scroll parallax for every photograph.
+           Frames: [data-parallax-img] and every gallery card. The photo
+           inside is oversized (1 + 2·strength of the frame height) and
+           translated as the frame crosses the viewport, so it moves at
+           ~80% of scroll speed. Photo-backed sections ([data-parallax-bg])
+           do the same through background-position. Off for reduced motion. -->
+      <script>
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reducedMotion) {
+          const DEFAULT_STRENGTH = 0.2; // ±20% of the frame height across the traversal
+          const clamp01 = (v: number) => Math.max(-1, Math.min(1, v));
+
+          type Frame = { el: HTMLElement; img: HTMLElement; strength: number };
+          let frames: Frame[] = [];
+          let bgs: HTMLElement[] = [];
+
+          function collect() {
+            const els = document.querySelectorAll<HTMLElement>("[data-parallax-img], .ticker-card");
+            frames = [];
+            els.forEach((el) => {
+              const img = el.querySelector<HTMLElement>(":scope > img");
+              if (!img) return;
+              const strength = parseFloat(el.dataset.parallaxImg || "") || DEFAULT_STRENGTH;
+              img.style.height = `${(1 + 2 * strength) * 100}%`;
+              img.style.willChange = "transform";
+              frames.push({ el, img, strength });
+            });
+            bgs = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax-bg]"));
+          }
+
+          function update() {
+            const vh = window.innerHeight;
+            for (const f of frames) {
+              const r = f.el.getBoundingClientRect();
+              if (r.bottom < -100 || r.top > vh + 100) continue;
+              // +1 entering at the bottom … −1 leaving at the top
+              const p = clamp01((r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2));
+              const ty = -f.strength * r.height * (1 - p);
+              f.img.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0)`;
+            }
+            for (const el of bgs) {
+              const r = el.getBoundingClientRect();
+              if (r.bottom < -100 || r.top > vh + 100) continue;
+              const p = clamp01((r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2));
+              el.style.backgroundPositionY = `${(50 - p * 30).toFixed(2)}%`;
+            }
+          }
+
+          function loop() {
+            if (!document.hidden) update();
+            requestAnimationFrame(loop);
+          }
+
+          // The gallery clones its cards after load; re-collect once it has built.
+          collect();
+          window.addEventListener("load", collect);
+          const track = document.getElementById("gallery-track");
+          if (track) new MutationObserver(collect).observe(track, { childList: true });
+          window.addEventListener("resize", collect);
+          requestAnimationFrame(loop);
+        }
+      </script>
+
+      <!-- 7 · FOOTER -->
+      <footer class="relative bg-forest-deep py-16 text-ivory md:py-20">
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 z-10 opacity-[0.07] [background-image:radial-gradient(rgba(255,255,255,0.5)_0.5px,transparent_0.5px)] [background-size:3px_3px]"
+        >
+        </div>
+        <div class="container-site">
+          <div class="grid gap-12 md:grid-cols-12 md:gap-8">
+            <!-- Brand -->
+            <div class="md:col-span-4">
+              <p class="font-serif text-[30px] tracking-[0.1em] text-gold-light md:text-[34px]">
+                UXA VILLA
+              </p>
+              <div class="mt-5 flex items-center gap-2" aria-hidden="true">
+                <span class="h-px w-10 bg-gold-light/40"></span>
+                <span class="size-1 rounded-full bg-gold-light/70"></span>
+                <span class="h-px w-10 bg-gold-light/40"></span>
+              </div>
+              <p class="mt-7 max-w-[440px] text-[15px] leading-relaxed tracking-[-0.02em] text-ivory/75">
+                A boutique riverside villa homestay in Tezpur, Assam. Rooted in
+                heritage, designed for the intellectual traveler who seeks
+                silence and soul.
+              </p>
+            </div>
+
+            <!-- Discover -->
+            <nav aria-label="Discover" class="md:col-span-2 md:col-start-6">
+              <p class="text-[11px] font-medium uppercase tracking-[0.28em] text-gold-light">Discover</p>
+              <ul class="mt-5 space-y-3.5">
+                <li><a href="#our-story" class="text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">Our Story</a></li>
+                <li><a href="#suites" class="text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">The Suites</a></li>
+                <li><a href="#amenities" class="text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">Experience</a></li>
+                <li><a href="#" class="text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">Sustainability</a></li>
+              </ul>
+            </nav>
+
+            <!-- Information -->
+            <nav aria-label="Information" class="md:col-span-2">
+              <p class="text-[11px] font-medium uppercase tracking-[0.28em] text-gold-light">Information</p>
+              <ul class="mt-5 space-y-3.5">
+                <li><a href="#" class="text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">Privacy Policy</a></li>
+                <li><a href="#" class="text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">Terms &amp; Conditions</a></li>
+                <li><a href="#contact" class="text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">Contact</a></li>
+              </ul>
+            </nav>
+
+            <!-- Reach us -->
+            <div class="md:col-span-3 md:col-start-10">
+              <p class="text-[11px] font-medium uppercase tracking-[0.28em] text-gold-light">Reach Us</p>
+              <ul class="mt-5 space-y-3.5">
+                <li>
+                  <a href="tel:+919101798042" class="flex items-center gap-3 text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">
+                    <svg aria-hidden="true" class="size-[15px] shrink-0 text-gold-light/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+                    +91 91017 98042
+                  </a>
+                </li>
+                <li>
+                  <a href="https://wa.me/919101798042" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">
+                    <svg aria-hidden="true" class="size-[15px] shrink-0 text-gold-light/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.8A8 8 0 1 1 8.3 19L4 20Z"/><path d="M9.5 9.5c0 3 2 5 5 5l1-1.5-2-1-.8.8a4 4 0 0 1-1.8-1.8l.8-.8-1-2-1.2 1.3Z"/></svg>
+                    Message on WhatsApp
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:concierge@uxavilla.com" class="flex items-center gap-3 text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">
+                    <svg aria-hidden="true" class="size-[15px] shrink-0 text-gold-light/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                    concierge@uxavilla.com
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com/uxa_villa" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-[14px] font-medium tracking-[-0.01em] text-ivory/85 transition-colors hover:text-gold-light">
+                    <svg aria-hidden="true" class="size-[15px] shrink-0 text-gold-light/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.7" fill="currentColor" stroke="none"/></svg>
+                    @uxa_villa
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-ivory/10 pt-6 md:mt-16">
+            <p class="text-[13px] tracking-[-0.01em] text-ivory/60">
+              &copy; 2024 UXA Villa Homestay. A Heritage Estate of Assam.
+            </p>
+            <div class="flex flex-wrap items-center gap-8 text-[11px] font-medium uppercase tracking-[0.2em] text-ivory/45 md:gap-10">
+              <span>Designed by Poroflo</span>
+              <span>Tezpur &bull; Assam</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

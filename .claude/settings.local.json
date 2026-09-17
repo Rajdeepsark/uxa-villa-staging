@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm ls vite astro)",
+      "PowerShell(npm view astro@5.7.14 dependencies.vite)",
+      "PowerShell(npm run dev)",
+      "PowerShell(try { $r = Invoke-WebRequest -UseBasicParsing http://localhost:4321/ -TimeoutSec 10; $m = [regex]::Matches\\($r.Content, '.{40}font-serif.{40}'\\); $m | ForEach-Object { $_.Value }; $i = [regex]::Matches\\($r.Content, '.{30}italic.{30}'\\) | Select-Object -First 3; $i | ForEach-Object { $_.Value } } catch { $_.Exception.Message })"
+    ]
+  }
+}

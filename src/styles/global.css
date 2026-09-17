@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "EB Garamond", "Times New Roman", serif;
+
+  /* UXA Villa palette — deep forest green · warm ivory · soft cream · muted gold.
+     Every background, text, border, button and accent colour on the site
+     comes from these tokens. */
+  --color-forest: #1b2a22; /* primary brand: dark sections, headings, dark buttons */
+  --color-forest-deep: #121c17; /* hero base and photo overlays */
+  --color-forest-soft: #27392f; /* dark-button hover */
+  --color-ivory: #f7f4ec; /* light page background, text on dark */
+  --color-ivory-bright: #fffdf8; /* cards on ivory */
+  --color-cream: #eae0c9; /* primary CTA */
+  --color-cream-deep: #ddd0b1; /* primary CTA hover */
+  --color-gold: #a3834a; /* eyebrows, accents on light */
+  --color-gold-light: #d9bc85; /* eyebrows, accents on dark */
+  --color-ink-muted: #5c665f; /* body copy on light */
+}
+
+/* Shared content container — every section aligns to this.
+   Mobile: 20px sides · Tablet: 32px · Desktop: 24px (1280px cap). */
+@utility container-site {
+  max-width: 1280px;
+  width: calc(100% - 40px);
+  margin-inline: auto;
+
+  @media (width >= 640px) {
+    width: calc(100% - 64px);
+  }
+
+  @media (width >= 1024px) {
+    width: calc(100% - 48px);
+  }
+}
+
+/* Photograph frame — thin white stroke and a soft, low shadow. Applied to
+   every image card on the site (gallery cards, suite images). */
+@utility img-frame {
+  border: 3px solid #ffffff;
+  box-shadow:
+    0 18px 40px -18px rgba(27, 42, 34, 0.35),
+    0 2px 6px rgba(27, 42, 34, 0.06);
+}
+
+/* Editorial underline for a single word inside a serif heading — thin,
+   muted gold, slightly lowered, exact word width. `-light` is the variant
+   for headings on dark sections. */
+@utility u-editorial {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.14em;
+  text-decoration-skip-ink: none;
+  text-decoration-color: var(--color-gold);
+}
+@utility u-editorial-light {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.14em;
+  text-decoration-skip-ink: none;
+  text-decoration-color: var(--color-gold-light);
+}
+
+/* Paper grain — the hero's fine dot texture, laid over the whole page so
+   every light surface carries it. Dark sections add their own white-dot
+   layer, since forest dots vanish on forest. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(27, 42, 34, 0.6) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  opacity: 0.09;
+}
