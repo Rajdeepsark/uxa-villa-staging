@@ -237,10 +237,9 @@ import Button from "../components/Button.astro";
             const SPEED = 60; // px per second
             const HOVER_SLOW = 0.35; // speed multiplier while the pointer is over the gallery
             let hover = 0; // eases 0 → 1 while hovered
-            const SETTLE_MS = 450; // stillness after docking before motion begins
-            const RAMP_MS = 1400; // ease-in from rest to full speed
+            const RAMP_MS = 500; // brief ease-in once the marquee actually starts (not a wait — motion begins immediately)
             const SPREAD_START = 0.72; // surrounding cards fan out from here to 1 as the hero docks
-            const SHRINK_MS = 900; // MAIN eases from featured size into the row before motion
+            const SHRINK_VH = 0.4; // extra scroll, as a fraction of viewport height, to shrink MAIN from featured size into the row
             type Item = {
               el: HTMLElement;
               label: HTMLElement; // track label printed beneath the card
@@ -258,7 +257,8 @@ import Button from "../components/Button.astro";
             let originX = 0;
             let spread = 1;
             let featuredM = visual ? 0 : 1; // 0 = MAIN featured (large, elevated) · 1 = settled into the row
-            let dockShrunk = !visual; // MAIN was already in the row when it (re)docked
+            let marqueeStarted = !visual; // true once featuredM has reached 1 and the ticker is running
+            let marqueeStartAt = 0;
             // Frame geometry, recomputed in build()
             let W = 1440;
             let MAIN_W = 0;
@@ -447,7 +447,6 @@ import Button from "../components/Button.astro";
             // same element is re-parented into the slot.
             type State = "hero" | "moving" | "docked";
             let state: State = visual ? "hero" : "docked";
-            let dockedAt = 0; // timestamp of the most recent docking
             const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
             const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
             const ease = (t: number) =>
@@ -460,16 +459,20 @@ import Button from "../components/Button.astro";
                 slot.classList.add("is-filled");
                 visual.removeAttribute("style");
                 shade.style.opacity = "0";
-                dockedAt = performance.now();
-                dockShrunk = featuredM >= 1;
+                // Fresh dock: the shrink-into-row phase starts over, driven
+                // by whatever scrolling happens from here.
+                featuredM = 0;
+                marqueeStarted = false;
                 spread = 1;
                 placeAll();
               } else {
                 slot.classList.remove("is-filled");
                 if (visual.parentElement !== hero) hero.prepend(visual);
+                marqueeStarted = false;
                 if (next === "hero") {
                   visual.removeAttribute("style");
                   shade.style.opacity = "";
+                  featuredM = 0;
                   if (!reduced) {
                     spread = SPREAD_START;
                     placeAll();
@@ -500,26 +503,52 @@ import Button from "../components/Button.astro";
                 return;
               }
               if (p <= 0) return setState("hero");
-              if (p >= 1) return setState("docked");
 
-              setState("moving");
-              const e = ease(p);
-              // Surrounding cards fan out into their settled positions in
-              // step with the hero image's arrival.
-              spread = lerp(SPREAD_START, 1, e);
-              placeAll();
-              const st = visual.style;
-              st.position = "fixed";
-              st.zIndex = "30";
-              st.left = `${lerp(h.left, s.left, e)}px`;
-              st.top = `${lerp(h.top, s.top, e)}px`;
-              st.width = `${lerp(h.width, s.width, e)}px`;
-              st.height = `${lerp(h.height, s.height, e)}px`;
-              st.borderRadius = `${6 * e}px`;
-              shade.style.opacity = `${1 - e}`;
+              if (p < 1) {
+                setState("moving");
+                const e = ease(p);
+                // Surrounding cards fan out into their settled positions in
+                // step with the hero image's arrival.
+                spread = lerp(SPREAD_START, 1, e);
+                placeAll();
+                const st = visual.style;
+                st.position = "fixed";
+                st.zIndex = "30";
+                st.left = `${lerp(h.left, s.left, e)}px`;
+                st.top = `${lerp(h.top, s.top, e)}px`;
+                st.width = `${lerp(h.width, s.width, e)}px`;
+                st.height = `${lerp(h.height, s.height, e)}px`;
+                st.borderRadius = `${6 * e}px`;
+                shade.style.opacity = `${1 - e}`;
+                return;
+              }
+
+              // p reached 1: the image now exactly fills the featured MAIN
+              // frame. From here, continued scrolling drives the shrink into
+              // the row directly — no waiting, no timer. Once that shrink
+              // has actually completed the ticker takes over (see frame()).
+              setState("docked");
+              if (!marqueeStarted) {
+                const span = Math.max(vh * SHRINK_VH, 1);
+                const q = clamp((y - end) / span, 0, 1);
+                const m = ease(q);
+                if (m !== featuredM) {
+                  featuredM = m;
+                  placeAll();
+                }
+                if (featuredM >= 1) {
+                  marqueeStarted = true;
+                  marqueeStartAt = performance.now();
+                }
+              }
             }
 
             // ── Frame loop ─────────────────────────────────────────────
+            // The shrink-into-row phase is driven entirely by morph() from
+            // live scroll position — nothing here waits on a timer. Once
+            // marqueeStarted flips true (the shrink has actually finished),
+            // the ticker eases up to full speed; that ramp is brief and
+            // starts the instant it's earned, not after a pause.
             let last = performance.now();
             function frame(now: number) {
               const dt = Math.min((now - last) / 1000, 0.05);
@@ -528,24 +557,16 @@ import Button from "../components/Button.astro";
               const r = ticker.getBoundingClientRect();
               const near = r.bottom > -300 && r.top < window.innerHeight + 300;
               const offscreen = r.bottom <= 0 || r.top >= window.innerHeight;
-              if (state === "docked" && !reduced && !dockShrunk) {
-                // After the settle pause, MAIN eases from featured size into
-                // the row. Nothing moves horizontally until this completes.
-                const t = clamp((now - dockedAt - SETTLE_MS) / SHRINK_MS, 0, 1);
-                const m = t * t * (3 - 2 * t);
-                if (m !== featuredM) {
-                  featuredM = m;
-                  placeAll();
-                }
+
+              // No hero photo to hand off (defensive fallback only — the
+              // live page always has one): start the ticker once it's near.
+              if (!visual && !marqueeStarted && near) {
+                marqueeStarted = true;
+                marqueeStartAt = now;
               }
-              // Without a hero handoff, the clock starts when the section first comes near.
-              if (!visual && !dockedAt && near) dockedAt = now;
-              const motionStart = dockedAt + SETTLE_MS + (dockShrunk ? 0 : SHRINK_MS);
-              const settled = state === "docked" && dockedAt > 0 && now > motionStart;
-              if (settled && !reduced && near && !document.hidden) {
-                // Ease from rest to full speed once every card is in the row;
-                // slow smoothly while hovered.
-                const ramp = clamp((now - motionStart) / RAMP_MS, 0, 1);
+
+              if (marqueeStarted && !reduced && near && !document.hidden) {
+                const ramp = clamp((now - marqueeStartAt) / RAMP_MS, 0, 1);
                 hover += ((hovering ? 1 : 0) - hover) * Math.min(1, dt * 6);
                 advance(dt * (1 - Math.pow(1 - ramp, 3)) * lerp(1, HOVER_SLOW, hover));
               } else if (state !== "docked" && offscreen) {
