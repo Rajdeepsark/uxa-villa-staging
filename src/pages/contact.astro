@@ -163,17 +163,11 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.28em] text-fo
           return;
         }
         note.classList.add("hidden");
-        const lines = [
-          "Hello UXA Villa, please call me back about a stay.",
-          "",
-          `Name: ${val("name")}`,
-          `Phone: ${val("phone")}`,
-          (val("checkin") || val("checkout")) && `Dates: ${val("checkin") || "?"} to ${val("checkout") || "?"}`,
-          `Best time to call: ${val("window")}`,
-          val("notes") && "",
-          val("notes"),
-        ].filter((l) => l !== false && l !== "" || l === "");
-        window.open(`https://wa.me/919101798042?text=${encodeURIComponent(lines.filter((l) => l !== false).join("\n"))}`, "_blank", "noopener");
+        const lines = ["Hello UXA Villa, please call me back about a stay.", "", `Name: ${val("name")}`, `Phone: ${val("phone")}`];
+        if (val("checkin") || val("checkout")) lines.push(`Dates: ${val("checkin") || "?"} to ${val("checkout") || "?"}`);
+        lines.push(`Best time to call: ${val("window")}`);
+        if (val("notes")) lines.push("", val("notes"));
+        window.open(`https://wa.me/919101798042?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
       };
       submit.addEventListener("click", send);
       form.addEventListener("submit", send);
