@@ -719,7 +719,7 @@ import Button from "../components/Button.astro";
             </div>
             <span aria-hidden="true" class="absolute bottom-5 right-5 h-8 w-8 border-b border-r border-gold-light/40 md:bottom-6 md:right-6"></span>
 
-            <div class="relative z-10 mx-auto max-w-[680px]">
+            <div class="relative z-10 mx-auto max-w-[680px]" data-trail-exclude>
               <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold-light">
                 An Exclusive Buy-Out
               </p>
@@ -795,6 +795,13 @@ import Button from "../components/Button.astro";
             }
 
             estateCard.addEventListener("pointermove", (e) => {
+              // No photographs over the copy or the button — the whole
+              // content block, gaps included.
+              const c = estateCard.querySelector("[data-trail-exclude]")?.getBoundingClientRect();
+              if (c && e.clientX >= c.left - 16 && e.clientX <= c.right + 16 && e.clientY >= c.top - 16 && e.clientY <= c.bottom + 16) {
+                last = null;
+                return;
+              }
               const r = estateTrail.getBoundingClientRect();
               const x = e.clientX - r.left;
               const y = e.clientY - r.top;
