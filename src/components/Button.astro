@@ -46,14 +46,18 @@ const variants = {
   /* Explicit `transform` (not Tailwind's newer standalone `translate`
      property) so the hover slide works in older embedded Chromium
      webviews that don't yet support CSS `translate`. */
+  /* Fixed pixel offsets (not a percentage of the span's own text height,
+     which under-clears the 52px-tall clipped box and leaves a sliver of
+     the outgoing label visible) so each label fully clears the button
+     before the other one arrives. */
   .btn-label {
     transform: translateY(0);
   }
   .group:hover .btn-label {
-    transform: translateY(-135%);
+    transform: translateY(-64px);
   }
   .btn-label--shadow {
-    transform: translateY(135%);
+    transform: translateY(64px);
   }
   .group:hover .btn-label--shadow {
     transform: translateY(0);
