@@ -18,7 +18,7 @@ interface Props {
 const { href, variant = "dark", class: className = "", target, rel } = Astro.props;
 
 const base =
-  "inline-flex h-[52px] items-center justify-center rounded-full px-7 text-[12px] md:text-[12.5px] font-medium tracking-[-0.01em] transition-colors";
+  "group relative inline-flex h-[52px] items-center justify-center overflow-hidden rounded-full px-7 text-[12px] md:text-[12.5px] font-medium uppercase tracking-[0.12em] transition-colors";
 
 const variants = {
   dark: "bg-forest text-ivory hover:bg-forest-soft",
@@ -29,5 +29,15 @@ const variants = {
 ---
 
 <a href={href} target={target} rel={rel} class={`${base} ${variants[variant]} ${className}`}>
-  <slot />
+  <span
+    class="pointer-events-none flex items-center justify-center transition-transform duration-300 ease-out group-hover:-translate-y-[135%]"
+  >
+    <slot />
+  </span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 flex items-center justify-center translate-y-[135%] transition-transform duration-300 ease-out group-hover:translate-y-0"
+  >
+    <slot />
+  </span>
 </a>

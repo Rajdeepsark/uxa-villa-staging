@@ -30,7 +30,7 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-ivo
     <div class="container-site relative">
       <div class="grid gap-16 md:grid-cols-12 md:gap-8 lg:gap-12">
         <!-- Call the concierge -->
-        <div class="flex flex-col md:col-span-5">
+        <div data-reveal class="flex flex-col md:col-span-5">
           <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold-light">Call concierge</p>
           <a
             href={phoneHref}
@@ -44,10 +44,10 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-ivo
           </p>
 
           <div class="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
-            <Button href={phoneHref} variant="cream" class="uppercase tracking-[0.12em]">
+            <Button href={phoneHref} variant="cream">
               Call now <Arrow class="ml-1.5" />
             </Button>
-            <Button href={whatsapp} variant="outline" class="!border-gold-light !text-gold-light hover:!bg-gold-light/10 uppercase tracking-[0.12em]" target="_blank" rel="noopener noreferrer">
+            <Button href={whatsapp} variant="outline" class="!border-gold-light !text-gold-light hover:!bg-gold-light/10" target="_blank" rel="noopener noreferrer">
               <svg aria-hidden="true" class="mr-2.5 size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 20l1.3-3.8A8 8 0 1 1 8.3 19L4 20Z" /><path d="M9.5 9.5c0 3 2 5 5 5l1-1.5-2-1-.8.8a4 4 0 0 1-1.8-1.8l.8-.8-1-2-1.2 1.3Z" />
               </svg>
@@ -78,7 +78,7 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-ivo
         </div>
 
         <!-- Request a callback -->
-        <div class="md:col-span-6 md:col-start-7">
+        <div data-reveal class="reveal-delay-1 md:col-span-6 md:col-start-7">
           <form id="callback" novalidate>
             <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.28em] text-gold-light">Or, request a callback</p>
             <h1 class="font-serif tracking-[-0.03em] text-[36px] leading-[1.06] md:text-[44px] mt-4 text-ivory">
@@ -124,7 +124,7 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-ivo
             </div>
 
             <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
-              <Button href="#" variant="dark" class="js-submit !bg-ivory !text-forest hover:!bg-cream uppercase tracking-[0.12em]">
+              <Button href="#" variant="dark" class="js-submit !bg-ivory !text-forest hover:!bg-cream">
                 Request a callback <Arrow class="ml-1.5" />
               </Button>
               <p class="flex items-center gap-2 text-[13px] tracking-[-0.02em] text-ivory/65">

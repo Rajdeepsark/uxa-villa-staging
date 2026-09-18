@@ -31,6 +31,9 @@ const {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=EB+Garamond:wght@400;500;600&display=swap"
     />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
   </head>
   <body class="min-h-screen bg-ivory font-sans antialiased">
     <div class="relative">
@@ -38,5 +41,26 @@ const {
       <slot />
       <Footer />
     </div>
+
+    <script>
+      const targets = document.querySelectorAll<HTMLElement>("[data-reveal]");
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (reduced || !("IntersectionObserver" in window)) {
+        targets.forEach((el) => el.classList.add("is-revealed"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add("is-revealed");
+              io.unobserve(entry.target);
+            }
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+        );
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>

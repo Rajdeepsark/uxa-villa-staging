@@ -75,3 +75,37 @@ body::before {
   background-size: 3px 3px;
   opacity: 0.09;
 }
+
+/* Scroll reveal — elements marked [data-reveal] fade and rise into place
+   the first time they cross into the viewport (see the observer script in
+   Base.astro). Gated behind .js so content never disappears if that script
+   fails to run, and behind prefers-reduced-motion so it never moves for
+   guests who asked not to see motion. */
+.js [data-reveal] {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    transform: translateY(22px);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+}
+.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+.reveal-delay-1 {
+  --reveal-delay: 90ms;
+}
+.reveal-delay-2 {
+  --reveal-delay: 180ms;
+}
+.reveal-delay-3 {
+  --reveal-delay: 270ms;
+}
+.reveal-delay-4 {
+  --reveal-delay: 360ms;
+}
