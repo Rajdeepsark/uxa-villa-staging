@@ -30,14 +30,32 @@ const variants = {
 
 <a href={href} target={target} rel={rel} class={`${base} ${variants[variant]} ${className}`}>
   <span
-    class="pointer-events-none flex items-center justify-center transition-transform duration-300 ease-out group-hover:-translate-y-[135%]"
+    class="btn-label pointer-events-none flex items-center justify-center transition-transform duration-300 ease-out"
   >
     <slot />
   </span>
   <span
     aria-hidden="true"
-    class="pointer-events-none absolute inset-0 flex items-center justify-center translate-y-[135%] transition-transform duration-300 ease-out group-hover:translate-y-0"
+    class="btn-label btn-label--shadow pointer-events-none absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-out"
   >
     <slot />
   </span>
 </a>
+
+<style>
+  /* Explicit `transform` (not Tailwind's newer standalone `translate`
+     property) so the hover slide works in older embedded Chromium
+     webviews that don't yet support CSS `translate`. */
+  .btn-label {
+    transform: translateY(0);
+  }
+  .group:hover .btn-label {
+    transform: translateY(-135%);
+  }
+  .btn-label--shadow {
+    transform: translateY(135%);
+  }
+  .group:hover .btn-label--shadow {
+    transform: translateY(0);
+  }
+</style>
