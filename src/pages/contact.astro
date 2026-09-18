@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Button from "../components/Button.astro";
+import Arrow from "../components/Arrow.astro";
 
 const phone = "+91 91017 98042";
 const phoneHref = "tel:+919101798042";
@@ -44,7 +45,7 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-ivo
 
           <div class="mt-8 flex flex-wrap items-center gap-4 md:mt-10">
             <Button href={phoneHref} variant="cream" class="uppercase tracking-[0.12em]">
-              Call now &rarr;
+              Call now <Arrow class="ml-1.5" />
             </Button>
             <Button href={whatsapp} variant="outline" class="!border-gold-light !text-gold-light hover:!bg-gold-light/10 uppercase tracking-[0.12em]" target="_blank" rel="noopener noreferrer">
               <svg aria-hidden="true" class="mr-2.5 size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -124,7 +125,7 @@ const label = "block text-[11px] font-medium uppercase tracking-[0.2em] text-ivo
 
             <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 md:mt-10">
               <Button href="#" variant="dark" class="js-submit !bg-ivory !text-forest hover:!bg-cream uppercase tracking-[0.12em]">
-                Request a callback &rarr;
+                Request a callback <Arrow class="ml-1.5" />
               </Button>
               <p class="flex items-center gap-2 text-[13px] tracking-[-0.02em] text-ivory/65">
                 <svg aria-hidden="true" class="size-3.5 shrink-0 text-gold-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">

@@ -1,0 +1,25 @@
+---
+/**
+ * The site's one arrow icon — used after every CTA and list-row link in
+ * place of a plain "→" character. Sized in em so it scales with whatever
+ * text it follows, and colored via currentColor so it always matches.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  aria-hidden="true"
+  class={`inline-block size-[0.95em] shrink-0 -translate-y-[0.03em] align-middle ${className}`}
+  viewBox="0 0 16 16"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M2.5 8h10.5M9 4l4.5 4-4.5 4" />
+</svg>

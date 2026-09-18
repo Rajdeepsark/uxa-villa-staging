@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Button from "../components/Button.astro";
+import Arrow from "../components/Arrow.astro";
 ---
 
 <Base
@@ -63,10 +64,10 @@ import Button from "../components/Button.astro";
             </p>
             <div class="mt-7 flex flex-wrap items-center justify-center gap-5 md:mt-9 md:gap-7">
               <Button href="#contact" variant="cream">
-                PLAN YOUR STAY &rarr;
+                PLAN YOUR STAY <Arrow class="ml-1.5" />
               </Button>
               <Button href="#stay-overview" variant="ghost">
-                EXPLORE THE STAY &rarr;
+                EXPLORE THE STAY <Arrow class="ml-1.5" />
               </Button>
             </div>
           </div>
@@ -190,7 +191,7 @@ import Button from "../components/Button.astro";
             </p>
             <div class="mt-10 md:mt-12">
               <Button href="#contact" variant="dark">
-                RESERVE YOUR RETREAT &rarr;
+                RESERVE YOUR RETREAT <Arrow class="ml-1.5" />
               </Button>
             </div>
           </div>
@@ -741,7 +742,7 @@ import Button from "../components/Button.astro";
               </p>
               <div class="mt-9 flex flex-col items-center gap-5 md:mt-11">
                 <Button href="#contact" variant="cream" class="!px-9 uppercase tracking-[0.12em]">
-                  Plan Your Stay &rarr;
+                  Plan Your Stay <Arrow class="ml-1.5" />
                 </Button>
                 <p class="text-[11px] md:text-[12px] font-medium uppercase tracking-[0.2em] text-gold-light">
                   Tezpur &middot; Assam
@@ -1171,7 +1172,7 @@ import Button from "../components/Button.astro";
                       {suite.note}
                     </span>
                     <span class="shrink-0 text-[14px] text-ink-muted/70 transition-colors group-hover:text-forest">
-                      &rarr;
+                      <Arrow />
                     </span>
                   </a>
                 </li>
@@ -1309,7 +1310,7 @@ import Button from "../components/Button.astro";
               </p>
               <div class="mt-10 flex flex-wrap items-center justify-center gap-6 md:mt-12">
                 <Button href="tel:+919101798042" variant="cream">
-                  Check Availability &rarr;
+                  Check Availability <Arrow class="ml-1.5" />
                 </Button>
               </div>
               <div class="mt-8 flex flex-wrap items-center justify-center gap-8 text-[12px] md:text-[13px] tracking-[-0.01em] text-ivory/80">
