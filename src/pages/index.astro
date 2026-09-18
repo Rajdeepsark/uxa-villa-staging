@@ -2,6 +2,29 @@
 import Base from "../layouts/Base.astro";
 import Button from "../components/Button.astro";
 import Arrow from "../components/Arrow.astro";
+
+// Guest reviews — shared so the ticker below can repeat the set for a
+// seamless loop without duplicating the literal content.
+const reviews = [
+  {
+    quote:
+      "My stay here was amazing. The host was incredibly welcoming and ensured that all my needs were met. The place was very hygienic, well-maintained, and had a spacious parking area. The delicious food prepared by the cook was truly the cherry on top of a wonderful experience. Highly recommended!",
+    name: "Leeza Hazarika",
+    place: "Verified on Google",
+  },
+  {
+    quote:
+      "Had an amazing stay! The property was clean, cozy, and felt just like home. The rooms were spacious, well-maintained. The hospitality was exceptional — the hosts were warm, helpful, and made our stay truly comfortable.",
+    name: "Northeast Trekkify",
+    place: "Verified on Google",
+  },
+  {
+    quote:
+      "Cozy, peaceful, and beautifully put together. The host was so kind and attentive, making the entire process effortless. If you're looking for a flawless place to stay, look no further.",
+    name: "Gaurav Talukdar",
+    place: "Verified on Google",
+  },
+];
 ---
 
 <Base
@@ -1199,51 +1222,71 @@ import Arrow from "../components/Arrow.astro";
             </h2>
           </div>
 
-          <!-- Testimonial strip -->
+          <!-- Testimonial ticker — an infinite marquee. The set of reviews is
+               rendered twice back to back and the track animates from 0% to
+               -50%, so the moment it loops the content is identical to the
+               starting frame: no visible seam. Pure CSS (no JS), pauses on
+               hover so a review can actually be read, and holds still for
+               reduced motion. -->
           <div
             id="testimonial-strip"
-            class="mt-14 flex gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] md:mt-16 md:gap-6 [&::-webkit-scrollbar]:hidden"
+            class="testimonial-mask mt-14 overflow-hidden md:mt-16"
           >
-            {
-              [
-                {
-                  quote: "My stay here was amazing. The host was incredibly welcoming and ensured that all my needs were met. The place was very hygienic, well-maintained, and had a spacious parking area. The delicious food prepared by the cook was truly the cherry on top of a wonderful experience. Highly recommended!",
-                  name: "Leeza Hazarika",
-                  place: "Verified on Google",
-                },
-                {
-                  quote: "Had an amazing stay! The property was clean, cozy, and felt just like home. The rooms were spacious, well-maintained. The hospitality was exceptional — the hosts were warm, helpful, and made our stay truly comfortable.",
-                  name: "Northeast Trekkify",
-                  place: "Verified on Google",
-                },
-                {
-                  quote: "Cozy, peaceful, and beautifully put together. The host was so kind and attentive, making the entire process effortless. If you're looking for a flawless place to stay, look no further.",
-                  name: "Gaurav Talukdar",
-                  place: "Verified on Google",
-                },
-              ].map((t) => (
-                <figure class="w-[300px] shrink-0 rounded-[20px] border border-ivory/12 bg-ivory/[0.04] p-6 md:w-[340px] md:p-7">
-                  <div class="flex gap-0.5 text-gold-light" aria-hidden="true">
-                    {Array.from({ length: 5 }).map(() => (
-                      <svg class="size-3.5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z" /></svg>
-                    ))}
-                  </div>
-                  <blockquote class="mt-4 text-[15px] leading-relaxed tracking-[-0.02em] text-ivory/85 md:text-[16px]">
-                    &ldquo;{t.quote}&rdquo;
-                  </blockquote>
-                  <figcaption class="mt-6 flex items-center gap-3">
-                    <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-gold-light/15 text-[12px] font-medium tracking-[-0.01em] text-gold-light">
-                      {t.name.split(" ").map((w) => w[0]).join("")}
-                    </span>
-                    <span>
-                      <span class="block text-[14px] font-medium tracking-[-0.01em] text-ivory">{t.name}</span>
-                      <span class="block text-[12px] tracking-[-0.01em] text-ivory/55">{t.place}</span>
-                    </span>
-                  </figcaption>
-                </figure>
-              ))
-            }
+            <div class="testimonial-track flex w-max gap-5 md:gap-6">
+              {
+                [...reviews, ...reviews].map((t, i) => (
+                  <figure
+                    class="w-[300px] shrink-0 rounded-[20px] border border-ivory/12 bg-ivory/[0.04] p-6 md:w-[340px] md:p-7"
+                    aria-hidden={i >= reviews.length ? "true" : undefined}
+                  >
+                    <div class="flex gap-0.5 text-gold-light" aria-hidden="true">
+                      {Array.from({ length: 5 }).map(() => (
+                        <svg class="size-3.5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z" /></svg>
+                      ))}
+                    </div>
+                    <blockquote class="mt-4 text-[15px] leading-relaxed tracking-[-0.02em] text-ivory/85 md:text-[16px]">
+                      &ldquo;{t.quote}&rdquo;
+                    </blockquote>
+                    <figcaption class="mt-6 flex items-center gap-3">
+                      <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-gold-light/15 text-[12px] font-medium tracking-[-0.01em] text-gold-light">
+                        {t.name.split(" ").map((w) => w[0]).join("")}
+                      </span>
+                      <span>
+                        <span class="block text-[14px] font-medium tracking-[-0.01em] text-ivory">{t.name}</span>
+                        <span class="block text-[12px] tracking-[-0.01em] text-ivory/55">{t.place}</span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                ))
+              }
+            </div>
           </div>
+
+          <style>
+            .testimonial-mask {
+              -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+              mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+            }
+            .testimonial-track {
+              animation: testimonial-scroll 42s linear infinite;
+            }
+            .testimonial-mask:hover .testimonial-track {
+              animation-play-state: paused;
+            }
+            @keyframes testimonial-scroll {
+              from {
+                transform: translateX(0);
+              }
+              to {
+                transform: translateX(-50%);
+              }
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .testimonial-track {
+                animation: none;
+              }
+            }
+          </style>
 
           <!-- Stats -->
           <div class="mt-16 grid grid-cols-2 gap-y-10 border-t border-ivory/12 pt-12 md:mt-20 md:grid-cols-4 md:gap-0 md:divide-x md:divide-ivory/12 md:pt-14">
